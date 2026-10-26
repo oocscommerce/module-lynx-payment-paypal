@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © OOCS Commerce (https://www.oocscommerce.com). All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="lynx_no_cacheable"/>
+    <head>
+        <meta name="robots" content="NOINDEX,NOFOLLOW"/>
+        <title>Review Order</title>
+    </head>
+    <body>
+        <referenceContainer name="lynx.main.container">
+            <!-- Core's Review controller calls setQuote() on these blocks unguarded; Text stand-ins absorb the calls. -->
+            <block class="Magento\Framework\View\Element\Text" name="paypal.express.review">
+                <block class="Magento\Framework\View\Element\Text" name="paypal.express.review.details" as="details"/>
+                <block class="Magento\Framework\View\Element\Text" name="paypal.express.review.shipping.method" as="shipping_method"/>
+            </block>
+        </referenceContainer>
+        <referenceBlock name="lynx.inertia">
+            <arguments>
+                <!-- One visitor's order, never in the full page cache: drawn in the browser, never server rendered. -->
+                <argument name="ssr" xsi:type="boolean">false</argument>
+                <argument name="encrypt_history" xsi:type="boolean">true</argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

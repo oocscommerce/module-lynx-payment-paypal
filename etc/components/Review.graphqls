@@ -1,0 +1,80 @@
+"Order review after returning from PayPal — payer, addresses, shipping method, totals, and the button that places the order"
+type PaypalReview @component(
+  code: "default_paypal_review"
+  template: "OOCS_LynxPaymentPayPal::Components/Express/Review"
+  provider: "OOCS\\LynxPaymentPayPal\\Provider\\Express\\Review"
+  label: "PayPal Review"
+  group: "checkout"
+  icon: "ph-clipboard-text"
+  zones: ["content"]
+  availableOn: ["paypal_express_review"]
+) {
+  payment: PaypalReviewPayment! @optional
+  billing_address: StringMap! @optional
+  shipping: PaypalReviewShipping @optional
+  items: [PaypalReviewItems!]! @optional
+  totals: [PaypalReviewTotals!]! @optional
+  agreements: [PaypalReviewAgreement!]! @optional
+  urls: PaypalReviewUrls! @optional
+  "Every string the page shows, translated by the provider (Provider\\Express\\Review)."
+  labels: StringMap! @optional
+}
+
+type PaypalReviewPayment {
+  title: String! @optional
+  payer_email: String! @optional
+}
+
+type ShippingOption {
+  value: String!
+  label: String!
+  disabled: Boolean!
+}
+
+type PaypalReviewShippingGroups {
+  carrier: String!
+  options: [ShippingOption!]!
+}
+
+type PaypalReviewShipping {
+  address: StringMap!
+  can_edit_address: Boolean!
+  can_edit_method: Boolean!
+  current_method: String!
+  current_label: String!
+  groups: [PaypalReviewShippingGroups!]!
+}
+
+type PaypalReviewItems {
+  name: String!
+  qty: Int!
+  row_total: String!
+}
+
+type PaypalReviewTotals {
+  code: String!
+  label: String!
+  value: String!
+}
+
+enum PaypalReviewAgreementMode {
+  MANUAL @label(text: "manual")
+  AUTO @label(text: "auto")
+}
+
+type PaypalReviewAgreement {
+  agreement_id: Int!
+  name: String!
+  content: String!
+  checkbox_text: String!
+  is_html: Boolean!
+  mode: PaypalReviewAgreementMode!
+  content_height: String!
+}
+
+type PaypalReviewUrls {
+  save_shipping: String! @optional
+  place_order: String! @optional
+  edit: String! @optional
+  cart: String! @optional
+}

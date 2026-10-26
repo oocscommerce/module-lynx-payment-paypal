@@ -1,0 +1,20 @@
+"PayPal Credit button for the checkout page — PayPal collects the address, then the shopper confirms and places the order on the PayPal review page. Shows where the PayPal Credit method is available and in-context checkout is off; with in-context on, Credit appears inside the PayPal Express button instead."
+type PaypalExpressBml @component(
+  code: "default_paypal_express_bml"
+  template: "OOCS_LynxPaymentPayPal::Components/Express/Bml"
+  provider: "OOCS\\LynxPaymentPayPal\\Provider\\Express\\Bml"
+  label: "PayPal Credit Button"
+  group: "express_checkout"
+  icon: "ph-wallet"
+  zones: ["content"]
+  availableOn: ["checkout_index_index", "checkout_cart_index"]
+) {
+  "False when PayPal Credit may not be used, or when in-context is on and Credit is one of the funding sources inside"
+  enabled: Boolean! @optional
+  "Every string the button shows, translated by the provider on the server."
+  labels: StringMap! @optional
+  startUrl: String! @optional
+  imageUrl: String! @optional
+  infoImageUrl: String! @optional
+  infoUrl: String! @optional
+}

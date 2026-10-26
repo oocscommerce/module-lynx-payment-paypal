@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © OOCS Commerce (https://www.oocscommerce.com). All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--
+        Lynx checkout renderer of PayPal Express (in-context smart buttons): core's AJAX controllers place the order,
+        the renderer drives the buttons and follows the redirect. Payflow, hosted_pro and billing agreements are not
+        integrated.
+    -->
+    <type name="OOCS\LynxCheckout\Provider\Checkout\Step\Payment">
+        <arguments>
+            <argument name="paymentMethodRenderers" xsi:type="array">
+                <item name="paypal_express" xsi:type="array">
+                    <item name="component" xsi:type="string">OOCS_LynxPaymentPayPal/Components/Express</item>
+                    <item name="config" xsi:type="object">OOCS\LynxPaymentPayPal\Model\Config\Express</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

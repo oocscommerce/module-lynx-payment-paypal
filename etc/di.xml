@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © OOCS Commerce (https://www.oocscommerce.com). All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--
+        The review page in the editor's switcher. Core's Review controller redirects to the cart without a PayPal
+        token, so the preview frame shows the cart.
+    -->
+    <type name="OOCS\LynxPageBuilder\Model\PreviewPagebuilder">
+        <arguments>
+            <argument name="pages" xsi:type="array">
+                <item name="paypal_review" xsi:type="array">
+                    <item name="sort_order" xsi:type="number">84</item>
+                    <item name="label" xsi:type="string">PayPal review page</item>
+                    <item name="group" xsi:type="string">Checkout</item>
+                    <item name="path" xsi:type="string">paypal_express_review</item>
+                    <item name="route" xsi:type="string">paypal/express/review</item>
+                    <item name="sample_data" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

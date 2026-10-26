@@ -1,0 +1,46 @@
+enum Shape {
+  RECT @label(text: "Rectangular")
+  PILL @label(text: "Pill")
+  SHARP @label(text: "Square")
+}
+
+enum ButtonStyle {
+  GOLD @label(text: "Gold")
+  BLUE @label(text: "Blue")
+  SILVER @label(text: "Silver")
+  WHITE @label(text: "White")
+  BLACK @label(text: "Black")
+  IMAGE @label(text: "PayPal image")
+}
+
+"PayPal button for the checkout page — PayPal collects the address, then the shopper confirms and places the order on the PayPal review page. Shows wherever PayPal Express Checkout is available; core has no per-page switch for it, so putting this block in the layout is what turns it on."
+type PaypalExpressShortcut @component(
+  code: "default_paypal_express_shortcut"
+  template: "OOCS_LynxPaymentPayPal::Components/Express/Shortcut"
+  provider: "OOCS\\LynxPaymentPayPal\\Provider\\Express\\Shortcut"
+  label: "PayPal Express Button"
+  group: "express_checkout"
+  icon: "ph-wallet"
+  zones: ["content"]
+  availableOn: ["checkout_index_index", "checkout_cart_index"]
+) {
+  "PayPal's own image is what the native checkout renders, a fixed logo that cannot be resized. The colours draw a button in PayPal's palette instead, which sizes with the row the other express buttons sit in. Only applies when in-context checkout is off."
+  button_style: ButtonStyle! @setting(label: "Button Style", default: "gold")
+  "Corner shape of the button, following PayPal's own three: rectangular with lightly rounded corners, a full pill, or square corners."
+  shape: Shape! @setting(label: "Shape", default: "rect", dependsOn: {button_style: ["gold", "blue", "silver", "white", "black"]})
+  "Text on the button. Empty uses core's own wording, \"Checkout with PayPal\"."
+  label: LocalizedText! @setting(label: "Label", default: "", dependsOn: {button_style: ["gold", "blue", "silver", "white", "black"]})
+  "False when paypal_express may not be used at all; nothing renders."
+  enabled: Boolean! @optional
+  "Every string the button shows, translated by the provider on the server."
+  labels: StringMap! @optional
+  sdkUrl: String! @optional
+  styles: Json! @optional
+  dataAttributes: StringMap! @optional
+  getTokenUrl: String! @optional
+  onAuthorizeUrl: String! @optional
+  startUrl: String! @optional
+  "PayPal's own image for the redirect branch's button, resolved by the provider."
+  imageUrl: String! @optional
+  inContext: Boolean! @optional
+}
